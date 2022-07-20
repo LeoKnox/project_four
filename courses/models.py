@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.utils import timezone
 
 class Subject(models.Model):
     title = models.CharField(max_length=200)
@@ -39,6 +40,13 @@ class BaseContent(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     class Meta:
         abstract = True
+
+class OrderedContent(BaseContent):
+    class Meta:
+        proxy = True
+        ordering = ['created']
+    def created_delta(self):
+        return timezone.now() - self.created
 
 class Text(BaseContent):
     body = models.TextField()
