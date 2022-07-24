@@ -58,6 +58,13 @@ class ContentCreateUpdateView(TemplateResponseMixin, View):
         if id:
             self.obj = get_object_or_404(self.model, id=id, owner=request.user)
         return super().dispatch(request, module_id, mode_name, id)
+class ContentDeleteView(View):
+    def post(self, request, id):
+        content = get_object_or_404(Content, id=id, module__course__owner=request.user)
+        module = content.module
+        content.item.delete()
+        contet.delete()
+        returnredirect('module_conetn_list', module.id)
 class CourseCreateView(OwnerCourseEditMixin, CreateView):
     permission_required = 'courses.add_course'
 class CourseUpdateView(OwnerCourseEditMixin, UpdateView):
