@@ -89,6 +89,11 @@ class CourseModuleUpdateView(TemplateResponseMixin, View):
             formset.save()
             return redirect('manage_courselist')
         return self.render_to_response({'course': self.course, 'formset': formset })
+class ModuleContentListView(TemplateResponseMixin, View):
+    template_name = 'courses/manage/module/conent_list.html'
+    def get(self, request, module_id):
+        module = get_object_or_404(Module, id=module_id, course__owner=request.user)
+        return self.render_to_response({'module': module})
 
 class ManageCourseListView(ListView):
     model = Course
