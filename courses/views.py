@@ -12,7 +12,14 @@ from django.views.generic.detail import DetailView
 from braces.views import CsrfExemptMixin, JsonRequestResponseMixin
 from .forms import ModuleFormSet
 from .models import Course, Module, Content, Subject
+from students.forms import CourseEnrollForm
 
+class CourseDetailView(detailView):
+    model = Course
+    template_name = 'courses/course/detail.hmtl'
+    def get_context_data(self, **kwargs):
+        context['enroll_form'] = CourseEnrollForm(initial={'course':self.object})
+        return context
 class CourseDetailView(DetailView):
     model = Course
     template_name = 'courses/course/detail.html'
