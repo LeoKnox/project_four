@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'courses.apps.CoursesConfig',
     'students.app.StudnetsConfig',
     'embed_video',
+    'memchache_status',
 ]
 
 MIDDLEWARE = [
